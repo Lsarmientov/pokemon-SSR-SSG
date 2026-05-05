@@ -1,0 +1,19 @@
+<h1 class="text-3xl">Listado de Pokémons</h1>
+<hr class="my-2" />
+
+<div class="flex flex-col gap-4">
+  @if (isLoading()) {
+    <pokemon-list-skeleton [limit]="pagination.limit()" />
+  } @else {
+    <pokemon-list [pokemons]="pokemons()" />
+  }
+
+  <app-pagination
+    class="my-2"
+    [currentPage]="pagination.page()"
+    [limit]="pagination.limit()"
+    [pages]="pages()"
+    (pageChange)="pagination.update({ page: $event })"
+    (limitChange)="pagination.update({ limit: $event, page: 1 })"
+  />
+</div>

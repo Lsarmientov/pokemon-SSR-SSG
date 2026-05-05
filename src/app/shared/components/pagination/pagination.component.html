@@ -1,0 +1,51 @@
+<div class="flex flex-row items-center gap-1.5 flex-nowrap">
+  <!-- Espacio izquierdo para centrar -->
+  <div class="basis-sm"></div>
+
+  <!-- Paginación centrada -->
+  <div class="flex basis-lg items-center gap-1.5 flex-nowrap justify-center">
+    <button
+      class="btn btn-sm btn-ghost"
+      (click)="pageChange.emit(currentPage() - 1)"
+      [disabled]="currentPage() === 1"
+    >
+      ‹
+    </button>
+
+    @for (page of visiblePages(); track page) {
+      @if (page === '...') {
+        <span class="px-2 text-base-content/40 text-sm">…</span>
+      } @else {
+        <button
+          class="btn btn-sm"
+          [class.btn-primary]="page === currentPage()"
+          (click)="pageChange.emit(+page)"
+        >
+          {{ page }}
+        </button>
+      }
+    }
+
+    <button
+      class="btn btn-sm btn-ghost"
+      (click)="pageChange.emit(currentPage() + 1)"
+      [disabled]="currentPage() === pages()"
+    >
+      ›
+    </button>
+  </div>
+
+  <!-- Select a la derecha -->
+  <div class="flex basis-sm justify-end">
+    <select
+      class="select select-sm select-bordered w-28"
+      [value]="limit()"
+      (change)="onLimitChange($any($event.target).value)"
+    >
+      <option value="10">10</option>
+      <option value="20">20</option>
+      <option value="50">50</option>
+      <option value="100">100</option>
+    </select>
+  </div>
+</div>
